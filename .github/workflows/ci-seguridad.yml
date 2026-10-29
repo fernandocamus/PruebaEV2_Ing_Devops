@@ -86,6 +86,9 @@ jobs:
           cache: maven
           cache-dependency-path: tcg/pom.xml
 
+      - name: Permisos de ejecucion a Maven Wrapper
+        run: chmod +x mvnw
+
       - name: Build and test
         run: ./mvnw clean verify
 
@@ -117,6 +120,9 @@ jobs:
           java-version: '21'
           cache: maven
           cache-dependency-path: tcg/pom.xml
+
+      - name: Permisos de ejecucion a Maven Wrapper
+        run: chmod +x mvnw
 
       - name: Run SonarCloud Analysis
         env:
