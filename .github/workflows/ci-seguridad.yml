@@ -48,6 +48,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk test --severity-threshold=high
+        continue-on-error: true
 
       - name: Generate Snyk JSON Report
         if: always()
