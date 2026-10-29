@@ -33,6 +33,9 @@ jobs:
           cache: maven
           cache-dependency-path: tcg/pom.xml
 
+      - name: Permisos de ejecucion a Maven Wrapper
+        run: chmod +x mvnw
+
       - name: Install Snyk CLI
         run: npm install -g snyk
 
@@ -42,10 +45,14 @@ jobs:
         run: snyk auth $SNYK_TOKEN
 
       - name: Snyk test Java dependencies
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk test --severity-threshold=high
 
       - name: Generate Snyk JSON Report
         if: always()
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           echo "Generando reporte JSON de Snyk..."
           snyk test -json > snyk-report.json || echo "Snyk encontro vulnerabilidades, pero se continua con el reporte"
